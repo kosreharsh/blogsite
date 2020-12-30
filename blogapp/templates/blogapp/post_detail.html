@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+        <h1 class='posttitle loader'>{{ post.title }}</h1>
+
+       
+            <div class="date postdate">
+                {{ post.published_date }}
+            </div>
+
+
+      <p class='postcontent' >{{ post.text|safe|linebreaksbr }}</p>
+
+
+      {% if user.is_authenticated %}
+          <a class="btn btn-primary" href="{% url 'blogapp:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+          <a class="btn btn-primary" href="{% url 'blogapp:post_delete' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+      {% endif %}
+
+
+
+  <hr>
+  <a class="btn btn-primary btn-comment" href="{% url 'blogapp:addcomment' pk=post.pk %}">Add comment</a>
+  <div class="container">
+
+
+  {% for comment in post.comment_set.all %}
+  <br>
+     
+
+             
+              
+
+          <p>{{ comment.text|safe|linebreaks }}</p>
+          <p>Posted by: <strong>{{ comment.author }}  {{ comment.created_date }}</strong></p>
+          {% if user.is_authenticated  %}
+                  <a class="btn btn-default" href="{% url 'blogapp:commentdelete' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+           {% endif %}
+
+      
+   {% endfor %}
+   
+   {% if post.comment_set.all.count == 0 %}
+   <p>No comments  </p>
+       
+   {% endif %}
+       
+  
+</div>
+
+{% endblock %}

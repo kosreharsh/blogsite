@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="centerstage">
+    <p style="color: crimson; font-size: larger;">Post List</p>
+    <br>
+    <div class="card" style="width: 90%; ">
+
+        <ul class="list-group list-group-flush">
+            {% for post in post_list %}
+                <li class="list-group-item"><a style="color: rgb(240, 99, 18);font-size: large;" href="{% url 'blogapp:post_detail' pk=post.pk %}">{{ post.title }}</a>{% if post == post_list.0 %}<span class="badge badge-secondary">New</span>{% endif %}</li>
+            {% endfor %}
+        </ul>
+      </div>    
+</div>
+{% endblock %}
